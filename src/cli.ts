@@ -82,6 +82,7 @@ export const main = async (
     serve: boolean = true,
     port: number = 0,
     debugMode: boolean = false,
+    cachePages: boolean = true,
     overrideConfig: any = {}, // should have some keys of IDocumentOptions
 ) => {
     logger.log(`Client working dir: ${clientWorkingDir}`)
@@ -103,7 +104,7 @@ export const main = async (
         () => generateBundle,
         () => getExportPath(config)
     )
-    server.start(Math.abs(port), debugMode)
+    server.start(Math.abs(port), cachePages, debugMode)
     showHints()
     if (serve) {
         console.log(`Serving slides at: ${getUri(server)}`)

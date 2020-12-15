@@ -46,11 +46,11 @@ export class RevealServer {
     const addr = this.server.address()
     return typeof addr === 'string' ? addr : `http://${this.host}:${addr.port}/`
   }
-  public start(port = 0, debugMode = false) {
+  public start(port = 0, cachePages = true, debugMode = false) {
     try {
 
       if (!this.isListening && this.getRootDir()) {
-        this.configure(debugMode)
+        this.configure(cachePages, debugMode)
         this.server = this.app.listen(port)
       }
     } catch (err) {
@@ -58,7 +58,7 @@ export class RevealServer {
     }
   }
 
-  private configure(debugMode: boolean = false) {
+  private configure(cachePages: boolean = true, debugMode: boolean = false) {
 
     const app = this.app
 
@@ -73,7 +73,7 @@ export class RevealServer {
       root: path.resolve(this.extensionPath, 'views'),
       layout: 'template',
       viewExt: 'ejs',
-      cache: true,
+      cache: cachePages,
       debug: debugMode,
     });
 
