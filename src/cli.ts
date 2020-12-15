@@ -94,6 +94,13 @@ export const main = async (
         console.log(`Remove files from: ${exportPath}`)
         await jetpack.removeAsync(exportPath)
         console.log(`Start to generate presentation to: ${exportPath}`)
+
+        // copy all libs. Might be exhausting, but simpler and smaller than an automated scraper
+        const targetPath = path.join(getExportPath(config), "libs")
+        await jetpack.copy(path.join(rootDir, "libs"), targetPath)
+        console.log(`Lib files generated... ${targetPath}`)
+
+        console.warn("NOTE: The referenced relative files need to be copied manually!!")
     }
     const server = new RevealServer(
         logger,
@@ -115,9 +122,6 @@ export const main = async (
             // force ejs to generate main file
             const res = await axios.get(getUri(server) || "");
             console.log(`index.html generated... Http respones status: ${res.status}`)
-            // copy all libs. Might be exhausting, but simpler and smaller than an automated scraper
-            await jetpack.copy(path.join(rootDir, "libs"), path.join(getExportPath(config), "libs"))
-            console.log("Lib files generated...")
             server.stop()
             console.log("Server stopped... Exiting")
         } catch (err) {
