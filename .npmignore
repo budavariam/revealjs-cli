@@ -1,0 +1,17 @@
+*.xml
+utils/
+test/
+.vscode/
+.github
+export/
+*.tgz
+src/
+webpack.config.js
+tslint.json
+tsconfig.json
+config.json
+coverconfig.json
+.prettierrc
+.editorconfig
+.gitattributes
+*.map
