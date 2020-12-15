@@ -1,6 +1,14 @@
 name: continuous integration workflow
 
-on: [push]
+on: 
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+      - 'test/**'
+      - 'package.json'
+      - '*config.json'
 
 jobs:
   build:
