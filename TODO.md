@@ -1,8 +1,8 @@
 # TODO
 
-- [+] copy referenced local files as well without opening in a browser on generation
-- [+] fix CI
-- [+] publish to npm
+- [x] copy referenced local files as well without opening in a browser on generation
+- [x] fix CI
+- [x] publish to npm
 - [ ] HIGH: try out custom config values
 - [ ] LOW: dev server to reload on modifications
 - [ ] LOW: use a better logging strategy, err and verbose levels are not enough
