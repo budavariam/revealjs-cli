@@ -4,7 +4,7 @@ import * as jetpack from "fs-jetpack";
 import * as matter from 'gray-matter'
 import * as path from 'path'
 
-import { defaultConfiguration, IDocumentOptions } from "./Configuration"
+import { Configuration, defaultConfiguration, IDocumentOptions } from "./Configuration"
 import { Logger, LogLevel } from "./Logger"
 import { RevealServer } from "./RevealServer"
 import { parseSlides } from "./SlideParser"
@@ -18,18 +18,18 @@ const getExportPath = (config) => {
         : path.join(clientWorkingDir, config.exportHTMLPath)
 }
 
-// const slideContent = (documentText): string => {
-//     return matter(documentText).content
-// }
+const slideContent = (documentText): string => {
+    return matter(documentText).content
+}
 
 const frontMatter = (documentText: string): any => {
     return matter(documentText).data
 }
 
-const documentOptions = (documentText: string): IDocumentOptions => {
+const documentOptions = (defaultConfig, documentText: string): IDocumentOptions => {
     const front = frontMatter(documentText)
     // tslint:disable-next-line:no-object-literal-type-assertion
-    return { ...defaultConfiguration, ...front } as IDocumentOptions
+    return { ...defaultConfig, ...front } as IDocumentOptions
 }
 
 const getUri = (server): string | null => {
@@ -82,10 +82,12 @@ export const main = async (
     serve: boolean = true,
     port: number = 0,
     debugMode: boolean = false,
-    overrideConfig = {},
+    overrideConfig: any = {}, // should have some keys of IDocumentOptions
 ) => {
-    const config = { ...defaultConfiguration, ...overrideConfig }
+    logger.log(`Client working dir: ${clientWorkingDir}`)
+    logger.log(`Default assets root dir: ${rootDir}`)
     const documentText = "" + fs.readFileSync(slideSource)
+    const config: Configuration = { ...documentOptions(defaultConfiguration, documentText), ...overrideConfig }
     if (generateBundle) {
         const exportPath = getExportPath(config)
         console.log(`Remove files from: ${exportPath}`)
@@ -94,15 +96,15 @@ export const main = async (
     }
     const server = new RevealServer(
         logger,
-        () => rootDir, // RootDir
-        () => parseSlides(documentText, documentOptions(documentText)),
+        () => clientWorkingDir, // Static files relative to MD file
+        () => parseSlides(slideContent(documentText), config),
         () => config,
         rootDir, // BasePath to extensions, ejs views and libs in this folder
         () => generateBundle,
         () => getExportPath(config)
-        )
-        server.start(Math.abs(port), debugMode)
-        showHints()
+    )
+    server.start(Math.abs(port), debugMode)
+    showHints()
     if (serve) {
         console.log(`Serving slides at: ${getUri(server)}`)
         console.log(`Use this url to export (print) pdf: ${exportPDFUri(server)}`)

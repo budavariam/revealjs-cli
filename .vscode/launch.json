@@ -11,9 +11,11 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
+            "cwd": "${workspaceFolder}/examples/features/",
             "args": [
                 "-o",
-                "./examples/math/math.md",
+                "sample.md", // must start from the directory that the file is in
+                "-d",
                 "-p",
                 "8081"
             ],
