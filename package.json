@@ -12,6 +12,9 @@
     "type": "git",
     "url": "https://github.com/budavariam/revealjs-cli"
   },
+  "engines": {
+    "node": ">=12.0.0"
+  },
   "keywords": [
     "markdown",
     "reveal js",
