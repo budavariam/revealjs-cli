@@ -7,17 +7,29 @@
 
 This tool is based on the awesome [VSCode-Reveal](https://github.com/evilz/vscode-reveal).
 
-## Getting started for development
+## Getting started
 
-- Install dependencies: `npm install`
-- Run dev server: `npm webpack-dev`
-- Start the app server with e.g: `node dist/revealjs-cli-server.js ./examples/features/sample.md`
-- Open the server url that is printed
+```bash
+./dist/revealjs-cli.js --help
+Usage: revealjs-cli [options]
 
-## DEV Getting started
+Options:
+  -d, --debug              log additional debug info
+  -p, --port <port>        serve app on specifict port
+  -b, --build              save the generated presentation to the path specified in `exportHTMLPath`
+  -s, --serve              serve app on a random port
+  -c, --config <location>  config json file to override default values
+  -o, --open <location>    source of the starter markdown file
+  -h, --help               output usage information
+```
 
-- `npm install`
-- Debug: launch extension in a separate window
+You must specify the `--open` flag to load a markdown file for generation.
+You can find examples in the [examples](./examples) folder.
+
+You may set the `--build` flag to keep the generated files.
+In case you do not specify a `--port`, and the `--serve` flag is not set either, then a build bundle is created even if the `--build` flag is not set.
+
+Under the hood, it currently uses the same engine as [VSCode-Reveal](https://github.com/evilz/vscode-reveal).
 
 ## Features
 
@@ -42,7 +54,7 @@ Since Reveal.js use marked to parse the markdown string you can use this in your
 - GFM tables
 
 If you need a sample file you can get it here:
-https://raw.githubusercontent.com/budavariam/revealjs-cli-server/master/examples/sample/sample.md
+https://raw.githubusercontent.com/budavariam/revealjs-cli/master/examples/sample/sample.md
 
 ## <a id="statusbar"></a> Status bar
 
