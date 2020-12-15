@@ -117,13 +117,15 @@
     "webpack-node-externals": "^1.7.2"
   },
   "scripts": {
-    "build": "webpack --mode production && chmod +x dist/*",
+    "build": "webpack --mode production",
+    "postbuild": "node utils/set_execute_permission.js",
     "compile:tsc": "tsc -watch -p ./",
     "build:tsc": "tsc -p ./",
     "test": "jest",
     "coverage": "jest --coverage",
     "lint": "tslint -t verbose './src/**/*'",
-    "webpack": "webpack --mode development && chmod +x dist/*",
+    "webpack": "webpack --mode development",
+    "postwebpack": "node utils/set_execute_permission.js",
     "webpack-dev": "webpack --mode development --watch"
   },
   "license": "MIT"
