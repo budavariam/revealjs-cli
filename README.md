@@ -9,8 +9,10 @@
 
 This tool is based on the awesome [VSCode-Reveal](https://github.com/evilz/vscode-reveal).
 
-This is the first tool I've used to create markdown presentations, and I like the way it's put together. 
+This is the first tool I've used to create markdown presentations, and I like the way it's put together.
 The only thing I missed, was a way to call it from the command line, and have the same output as I do with the extension.
+
+Here you can read [my quick blog post](https://budavariam.github.io/posts/2020/06/01/markdown-slideshow/) about the possibilities of creating slideshows in Markdown.
 
 ## Getting started
 
