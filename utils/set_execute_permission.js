@@ -1,4 +1,5 @@
 "use strict";
 const fs = require("fs");
+const path = require("path")
 
-fs.chmodSync('./dist/revealjs-cli.js', 0o755)
+fs.chmodSync(path.join('.', 'dist', 'revealjs-cli.js'), 0o755)
