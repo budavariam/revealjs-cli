@@ -1,15 +1,20 @@
 # Reveal.js CLI server
 
-<!-- [![NODE.JS DEPENDENCIES](https://david-dm.org/budavariam/vscode-reveal/status.svg)](https://david-dm.org/budavariam/vscode-reveal)
-[![NODE.JS DEV DEPENDENCIES](https://david-dm.org/budavariam/vscode-reveal/dev-status.svg)](https://david-dm.org/budavariam/vscode-reveal?type=dev)
+[![continuous integration workflow](https://github.com/budavariam/revealjs-cli/workflows/continuous%20integration%20workflow/badge.svg)](https://github.com/budavariam/revealjs-cli/actions?query=workflow%3A%22continuous+integration+workflow%22)
 
-[![Known Vulnerabilities](https://snyk.io/test/github/budavariam/vscode-reveal/badge.svg?targetFile=package.json)](https://snyk.io/test/github/budavariam/vscode-reveal?targetFile=package.json) -->
+[![NODE.JS DEPENDENCIES](https://david-dm.org/budavariam/revealjs-cli/status.svg)](https://david-dm.org/budavariam/revealjs-cli)
+[![NODE.JS DEV DEPENDENCIES](https://david-dm.org/budavariam/revealjs-cli/dev-status.svg)](https://david-dm.org/budavariam/revealjs-cli?type=dev)
+
+[![Known Vulnerabilities](https://snyk.io/test/github/budavariam/revealjs-cli/badge.svg?targetFile=package.json)](https://snyk.io/test/github/budavariam/vscode-reveal?targetFile=package.json)
 
 This tool is based on the awesome [VSCode-Reveal](https://github.com/evilz/vscode-reveal).
 
+This is the first tool I've used to create markdown presentations, and I like the way it's put together. 
+The only thing I missed, was a way to call it from the command line, and have the same output as I do with the extension.
+
 ## Getting started
 
-```bash
+```text
 ./dist/revealjs-cli.js --help
 Usage: revealjs-cli [options]
 
@@ -18,6 +23,7 @@ Options:
   -p, --port <port>        serve app on specifict port
   -b, --build              save the generated presentation to the path specified in `exportHTMLPath`
   -s, --serve              serve app on a random port
+  -r, --refresh            do not cache generated template
   -c, --config <location>  config json file to override default values
   -o, --open <location>    source of the starter markdown file
   -h, --help               output usage information
@@ -31,11 +37,11 @@ In case you do not specify a `--port`, and the `--serve` flag is not set either,
 
 Under the hood, it currently uses the same engine as [VSCode-Reveal](https://github.com/evilz/vscode-reveal).
 
+For contributions getting started see [dev docs](./README-DEV.md).
+
 ## Features
 
 - [Markdown](#markdown)
-- [Status bar](#statusbar)
-- [Sidebar and navigation](#sidebar)
 - [Theme](#theme)
 - [Highlight Theme](#highlight)
 - [Reveal.js Options](#options)
@@ -55,29 +61,6 @@ Since Reveal.js use marked to parse the markdown string you can use this in your
 
 If you need a sample file you can get it here:
 https://raw.githubusercontent.com/budavariam/revealjs-cli/master/examples/sample/sample.md
-
-## <a id="statusbar"></a> Status bar
-
-As soon as your markdown document has at least two slides, slides counter will appear in the status bar on right.
-
-![](https://github.com/budavariam/vscode-reveal/raw/master/images/statusbar.png)
-
-Clicking on slide counter will launch preview on right, and you can now see the local address of express server used to host Reveal presentation.
-Clicking on the address will launch presentation in the browser.
-
-You can stop express server when you want by clicking on the red square.
-
-## <a id="sidebar"></a> Sidebar and navigation
-
-**Now in version 2**, you can see a list of all your slides on the sidebar.
-The list will show the first line of text that is found in the slide, most of the time it will be a title, but it can also be an image or something else.
-
-Blue icon is used to show horizontal slide, orange is used for vertical ones.
-
-Clicking on slide name will move the cursor on beginning of the slide in the editor.
-If the preview is opened it will also show the selected slide on it.
-
-![](https://github.com/budavariam/vscode-reveal/raw/master/images/sidebar.png)
 
 ## <a id="theme"></a> Theme
 
@@ -256,4 +239,4 @@ enableSearch: false
 
 ## Known Issues
 
-Please add issues on github.
+Please add issues on [Github](https://github.com/budavariam/revealjs-cli/issues/new).
