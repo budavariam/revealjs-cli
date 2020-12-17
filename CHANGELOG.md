@@ -20,6 +20,12 @@ Reminder for types of changes:
 
 ## [Unreleased]
 
+## [0.0.4] - 2020-12-17
+
+## Fixed
+
+- Set custom location did not accept value from `location` flag
+
 ## [0.0.3] - 2020-12-17
 
 ## Added
@@ -48,5 +54,6 @@ Getting started from [VSCode Reveal:4.0.3](https://github.com/evilz/vscode-revea
 - CLI options
 - Extract modules from VSCode extension
 
-[Unreleased]: https://github.com/budavariam/revealjs-cli/compare/v0.0.3...HEAD
+[Unreleased]: https://github.com/budavariam/revealjs-cli/compare/v0.0.4...HEAD
+[0.0.4]: https://github.com/budavariam/revealjs-cli/compare/v0.0.3...v0.0.4
 [0.0.3]: https://github.com/budavariam/revealjs-cli/compare/v0.0.1...v0.0.3
