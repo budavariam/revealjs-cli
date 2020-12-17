@@ -6,6 +6,7 @@ const program = new Command()
 
 program
     .option('-d, --debug', 'log additional debug info')
+    .option('-e, --debugserver', 'log ejb debug info')
     .option('-p, --port <port>', 'serve app on specifict port')
     .option('-b, --build', 'save the generated presentation to the path specified in `exportHTMLPath`')
     .option('-s, --serve', 'serve app on a random port')
@@ -15,6 +16,7 @@ program
 program.parse(process.argv);
 
 const debugMode = program.debug
+const debugServer = program.debugserver
 if (debugMode) {
     console.log("Started tool with the following options: ", program.opts())
 };
@@ -37,6 +39,7 @@ main(
     serve,
     port,
     debugMode,
+    debugServer,
     cachePages,
     overrideConfig,
 )

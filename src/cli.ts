@@ -117,6 +117,7 @@ export const main = async (
     serve: boolean = true,
     port: number = 0,
     debugMode: boolean = false,
+    debugServer: boolean = false,
     cachePages: boolean = true,
     overrideConfig: any = {}, // should have some keys of IDocumentOptions
 ) => {
@@ -144,7 +145,7 @@ export const main = async (
         () => generateBundle,
         () => getExportPath(config)
     )
-    server.start(Math.abs(port), cachePages, debugMode)
+    server.start(Math.abs(port), cachePages, debugServer)
     const serverUri = getUri(server) || ""
     showHints()
     if (serve) {

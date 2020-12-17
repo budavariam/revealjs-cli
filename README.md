@@ -22,6 +22,7 @@ Usage: revealjs-cli [options]
 
 Options:
   -d, --debug              log additional debug info
+  -e, --debugserver        log ejb debug info
   -p, --port <port>        serve app on specifict port
   -b, --build              save the generated presentation to the path specified in `exportHTMLPath`
   -s, --serve              serve app on a random port

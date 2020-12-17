@@ -6,7 +6,7 @@
 - [ ] HIGH: try out custom config values
 - [ ] LOW: dev server to reload on modifications
 - [ ] LOW: use a better logging strategy, err and verbose levels are not enough
-- [ ] HIGH: Let the users decide whether they want a lot of ejb parser logs separate from debugMode
+- [x] HIGH: Let the users decide whether they want a lot of ejb parser logs separate from debugMode
 - [ ] HIGH: Make it clear that the folder that we're going to export in, is going to be cleared before export
 - [ ] MED: Make it easier to change export location
 - [ ] LOW: Add automatized version increase and publish
