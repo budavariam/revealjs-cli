@@ -126,7 +126,9 @@
     "lint": "tslint -t verbose './src/**/*'",
     "webpack": "webpack --mode development",
     "postwebpack": "node utils/set_execute_permission.js",
-    "webpack-dev": "webpack --mode development --watch"
+    "webpack-dev": "webpack --mode development --watch",
+    "prepublish": "npm version patch", 
+    "publish": "npm publish"
   },
   "license": "MIT"
 }
