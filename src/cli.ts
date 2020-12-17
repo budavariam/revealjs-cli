@@ -4,12 +4,18 @@ import * as jetpack from "fs-jetpack";
 import * as matter from 'gray-matter'
 import * as path from 'path'
 import * as cheerio from 'cheerio'
+import * as readline from 'readline'
 
 import { Configuration, defaultConfiguration, IDocumentOptions } from "./Configuration"
 import { Logger, LogLevel } from "./Logger"
 import { RevealServer } from "./RevealServer"
 import { parseSlides } from "./SlideParser"
 import { URL } from 'url';
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 
 const rootDir = path.join(__dirname, "..")
 const clientWorkingDir = process.cwd()
@@ -82,18 +88,69 @@ const cheerioLocalFileReference = (_: number, e: string) => e && !e.match(/^#|\?
  * @param baseUrl url of the server that exportst the presentation
  * @param body HTML of the root of the presentation
  */
-const getReferencedFiles = async (baseUrl: string, body: string) => {
+const getReferencedFiles = async (logger: Logger, baseUrl: string, body: string) => {
     const $ = cheerio.load(body);
     const references = [].concat(
         $('*[href]').map((_, link) => $(link).attr('href')).filter(cheerioLocalFileReference).get()
     ).concat(
         $('*[src]').map((_, link) => $(link).attr('src')).filter(cheerioLocalFileReference).get()
     ).map((relativePath) => (new URL(relativePath, baseUrl)).href)
-    console.log(references)
-
+    logger.log("Found references: " + JSON.stringify(references, null, 2))
     return Promise.allSettled(references.map((path) => {
         return axios.get(path)
-    }))
+    })).then((r) => {
+        for (let request of r) {
+            const url = (request.status === 'fulfilled' // typescript guard
+                ? request?.value?.config?.url
+                : request?.reason?.config?.url) || "--missing url data--"
+            const successfulRequest = request.status === 'fulfilled'
+            const message = `${request.status} - ${url}`
+            if (successfulRequest) {
+                logger.log(message)
+            } else {
+                logger.error(message)
+            }
+        }
+        return r
+    }).catch(e => {
+        console.error("Failed to get referenced files: ", e)
+    })
+}
+
+const readLineAsync = (message: string): Promise<string> => {
+    return new Promise((resolve, _reject) => {
+        rl.question(message, (answer: string) => {
+            resolve(answer);
+            rl.close();
+        })
+    })
+}
+
+const generateBundle = async (logger: Logger, config: Configuration, noQuestions: boolean = false) => {
+    const exportPath = getExportPath(config)
+    console.log(`Remove files from: ${exportPath}`)
+    if (!exportPath) {
+        logger.error(`Seemingly missing exportPath: '${exportPath}'`)
+        process.exit(1)
+    }
+    if (jetpack.exists(exportPath)) {
+        let shouldContinue = true
+        if (!noQuestions) {
+            const promptInput = await readLineAsync(`Path (${exportPath}) already exists. The script will erease it's content completely. Do you want to continue? [Y/n] `);
+            shouldContinue = promptInput.trim().match(/^([Yy]|\s*)$/) != null
+        }
+        if (!shouldContinue) {
+            logger.error("Path is not empty, and we should not override it. Exiting...")
+            process.exit(1)
+        }
+    }
+    await jetpack.removeAsync(exportPath)
+    logger.log(`Start to generate presentation to: ${exportPath}`)
+    // copy all libs. Might be exhausting, but this makes sure that all plugins work properly
+    const copyAllLibsTargetPath = path.join(getExportPath(config), "libs")
+    await jetpack.copy(path.join(rootDir, "libs"), copyAllLibsTargetPath)
+    logger.log(`Lib files generated... ${copyAllLibsTargetPath}`)
+    console.warn("NOTE: Referenced relative files have been copied from `src` and `href` properties. For others, or dynamic ones (in case any) please find a custom solution.")
 }
 
 export const initLogger = (logLevel: LogLevel): Logger => new Logger(logLevel, (e) => { console.log(e) })
@@ -113,38 +170,36 @@ export const loadConfigFile = (path: string): any => {
 export const main = async (
     logger: Logger,
     slideSource: string,
-    generateBundle: boolean,
+    shouldGenerateBundle: boolean,
+    exportLocation: boolean,
     serve: boolean = true,
     port: number = 0,
     debugMode: boolean = false,
+    noQuestions: boolean = false,
+    debugServer: boolean = false,
     cachePages: boolean = true,
     overrideConfig: any = {}, // should have some keys of IDocumentOptions
 ) => {
-    logger.log(`Client working dir: ${clientWorkingDir}`)
-    logger.log(`Default assets root dir: ${rootDir}`)
+    const presentationWorkingDir = path.join(clientWorkingDir, path.dirname(slideSource))
+    logger.log(`Client working dir: ${clientWorkingDir}`) // Where the user started the app
+    logger.log(`Presentation working dir: ${presentationWorkingDir}`) // Where the presentation is held, relative paths are originated from there
+    logger.log(`Default assets root dir: ${rootDir}`) // Where the assets are available in the installed lib folder
     const documentText = "" + fs.readFileSync(slideSource)
-    const config: Configuration = { ...documentOptions(defaultConfiguration, documentText), ...overrideConfig }
-    if (generateBundle) {
-        const exportPath = getExportPath(config)
-        console.log(`Remove files from: ${exportPath}`)
-        await jetpack.removeAsync(exportPath)
-        console.log(`Start to generate presentation to: ${exportPath}`)
-        // copy all libs. Might be exhausting, but this makes sure that all plugins work properly
-        const targetPath = path.join(getExportPath(config), "libs")
-        await jetpack.copy(path.join(rootDir, "libs"), targetPath)
-        // console.log(`Lib files generated... ${targetPath}`)
-        console.warn("NOTE: Referenced relative files have been copied from `src` and `href` properties, for others, or dynamic ones please find a custom solution.")
+    const overrideConfigValue = exportLocation ? { exportHTMLPath: exportLocation } : {}
+    const config: Configuration = { ...documentOptions(defaultConfiguration, documentText), ...overrideConfig, overrideConfigValue }
+    if (shouldGenerateBundle) {
+        await generateBundle(logger, config, noQuestions)
     }
     const server = new RevealServer(
         logger,
-        () => clientWorkingDir, // Static files relative to MD file
+        () => presentationWorkingDir, // Static files relative to MD file
         () => parseSlides(slideContent(documentText), config),
         () => config,
         rootDir, // BasePath to extensions, ejs views and libs in this folder
-        () => generateBundle,
+        () => shouldGenerateBundle,
         () => getExportPath(config)
     )
-    server.start(Math.abs(port), cachePages, debugMode)
+    server.start(Math.abs(port), cachePages, debugServer)
     const serverUri = getUri(server) || ""
     showHints()
     if (serve) {
@@ -156,7 +211,7 @@ export const main = async (
             // force ejs to generate main file
             const res = await axios.get(serverUri);
             console.log(`index.html generated... ${serverUri} response status: ${res.status}`)
-            await getReferencedFiles(serverUri, res.data)
+            await getReferencedFiles(logger, serverUri, res.data)
             server.stop()
             console.log("Server stopped... Exiting")
         } catch (err) {

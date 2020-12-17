@@ -1,7 +1,7 @@
 {
   "name": "revealjs-cli",
   "displayName": "revealjs-cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Show markdown as revealJs presentation",
   "bin": {
     "revealjs-cli": "dist/revealjs-cli.js"
@@ -126,7 +126,9 @@
     "lint": "tslint -t verbose './src/**/*'",
     "webpack": "webpack --mode development",
     "postwebpack": "node utils/set_execute_permission.js",
-    "webpack-dev": "webpack --mode development --watch"
+    "webpack-dev": "webpack --mode development --watch",
+    "prenpmpublish": "npm version patch",
+    "npmpublish": "npm publish"
   },
   "license": "MIT"
 }
