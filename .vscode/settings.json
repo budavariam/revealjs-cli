@@ -20,10 +20,6 @@
     "coverage-gutters.partialHighlightLight": "rgba(220, 213, 143, 0.15)",
     "coverage-gutters.showLineCoverage": true,
     "coverage-gutters.showRulerCoverage": true,
-    "sonarlint.connectedMode.project": {
-        "projectKey": "evilz_vscode-reveal",
-        "serverId": "evilz-github"
-    },
     "tslint.autoFixOnSave": true,
     "workbench.colorCustomizations": {
         "activityBar.activeBackground": "#e2926e",

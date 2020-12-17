@@ -8,6 +8,7 @@
 'use strict';
 
 const path = require('path');
+const nodeExternals = require('webpack-node-externals');
 const { ContextReplacementPlugin, BannerPlugin } = require('webpack');
 
 /**@type {import('webpack').Configuration}*/
@@ -22,9 +23,10 @@ const config = {
     devtoolModuleFilenameTemplate: "../[resource-path]",
   },
   devtool: 'source-map',
-  externals: {
+  externals: [
+    nodeExternals() // Exclude the node modules from the generated bundle, so the lib size is small, and the dependency list can be checked for vulnerabilities. (Comment it to create a single executable, that only depends on the libs folder location)
     // Add other modules that cannot be webpack'ed, 📖 -> https://webpack.js.org/configuration/externals/
-  },
+  ],
   resolve: { // support reading TypeScript and JavaScript files, 📖 -> https://github.com/TypeStrong/ts-loader
     extensions: ['.ts', '.js'],
     alias: {
