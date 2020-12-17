@@ -11,5 +11,6 @@
 
 - Install dependencies: `npm install`
 - Prod build: `npm run build`
-- Publish with version bump: `npm run npmpublish`.
-    (I can not simply use publish, because npm install triggers prepublish for some reason instead of preinstall)
+- Login to npm with the proper credentials: `npm login`
+- Publish with version bump: `npm run npmpublish`
+    (I can not simply use `publish`, because npm install triggers `prepublish` for some reason instead of `preinstall`)
