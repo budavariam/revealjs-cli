@@ -17,19 +17,23 @@ Here you can read [my quick blog post](https://budavariam.github.io/posts/2020/0
 ## Getting started
 
 ```text
-./dist/revealjs-cli.js --help
+$ npm install revealjs-cli
+$ revealjs-cli --help
+
 Usage: revealjs-cli [options]
 
 Options:
-  -d, --debug              log additional debug info
-  -e, --debugserver        log ejb debug info
-  -p, --port <port>        serve app on specifict port
-  -b, --build              save the generated presentation to the path specified in `exportHTMLPath`
-  -s, --serve              serve app on a random port
-  -r, --refresh            do not cache generated template
-  -c, --config <location>  config json file to override default values
-  -o, --open <location>    source of the starter markdown file
-  -h, --help               output usage information
+  -d, --debug               log additional debug info
+  -e, --debugserver         log ejb debug info
+  -p, --port <port>         serve app on specifict port
+  -b, --build               save the generated presentation to the path specified in `exportHTMLPath`
+  -l, --location <location> save the generated presentation to the path specified. This is the strongest setting.
+  -y, --yes                 answer yes to every prompt
+  -s, --serve               serve app on a random port
+  -r, --refresh             do not cache generated template
+  -c, --config <location>   config json file to override default values
+  -o, --open <location>     source of the starter markdown file
+  -h, --help                output usage information
 ```
 
 You must specify the `--open` flag to load a markdown file for generation.

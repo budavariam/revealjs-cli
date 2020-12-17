@@ -29,6 +29,7 @@ Reminder for types of changes:
 ## Changed
 
 - Better format log messages for referenced relative files
+- Make it clear that bundle creation clears out the target folder
 
 ## 0.0.1
 

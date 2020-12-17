@@ -16,6 +16,7 @@
                 "-o",
                 "sample.md", // must start from the directory that the file is in
                 "-d",
+                "-y",
                 "-p",
                 "8081"
             ],
