@@ -82,18 +82,33 @@ const cheerioLocalFileReference = (_: number, e: string) => e && !e.match(/^#|\?
  * @param baseUrl url of the server that exportst the presentation
  * @param body HTML of the root of the presentation
  */
-const getReferencedFiles = async (baseUrl: string, body: string) => {
+const getReferencedFiles = async (logger: Logger, baseUrl: string, body: string) => {
     const $ = cheerio.load(body);
     const references = [].concat(
         $('*[href]').map((_, link) => $(link).attr('href')).filter(cheerioLocalFileReference).get()
     ).concat(
         $('*[src]').map((_, link) => $(link).attr('src')).filter(cheerioLocalFileReference).get()
     ).map((relativePath) => (new URL(relativePath, baseUrl)).href)
-    console.log(references)
-
+    logger.log("Found references: " + JSON.stringify(references, null, 2))
     return Promise.allSettled(references.map((path) => {
         return axios.get(path)
-    }))
+    })).then((r) => {
+        for (let request of r) {
+            const url = (request.status === 'fulfilled' // typescript guard
+            ? request?.value?.config?.url
+            : request?.reason?.config?.url) || "--missing url data--"
+            const successfulRequest = request.status === 'fulfilled'
+            const message = `${request.status} - ${url}`
+            if (successfulRequest) {
+                logger.log(message)
+            } else {
+                logger.error(message)
+            } 
+        }
+        return r
+    }).catch(e => {
+        console.error("Failed to get referenced files: ", e)
+    })
 }
 
 export const initLogger = (logLevel: LogLevel): Logger => new Logger(logLevel, (e) => { console.log(e) })
@@ -159,7 +174,7 @@ export const main = async (
             // force ejs to generate main file
             const res = await axios.get(serverUri);
             console.log(`index.html generated... ${serverUri} response status: ${res.status}`)
-            await getReferencedFiles(serverUri, res.data)
+            await getReferencedFiles(logger, serverUri, res.data)
             server.stop()
             console.log("Server stopped... Exiting")
         } catch (err) {
