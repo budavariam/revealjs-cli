@@ -186,7 +186,7 @@ export const main = async (
     logger.log(`Default assets root dir: ${rootDir}`) // Where the assets are available in the installed lib folder
     const documentText = "" + fs.readFileSync(slideSource)
     const overrideConfigValue = exportLocation ? { exportHTMLPath: exportLocation } : {}
-    const config: Configuration = { ...documentOptions(defaultConfiguration, documentText), ...overrideConfig, overrideConfigValue }
+    const config: Configuration = { ...documentOptions(defaultConfiguration, documentText), ...overrideConfig, ...overrideConfigValue }
     if (shouldGenerateBundle) {
         await generateBundle(logger, config, noQuestions)
     }
