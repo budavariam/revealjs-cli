@@ -14,6 +14,8 @@ The only thing I missed, was a way to call it from the command line, and have th
 
 Here you can read [my quick blog post](https://budavariam.github.io/posts/2020/06/01/markdown-slideshow/) about the possibilities of creating slideshows in Markdown.
 
+See version info in [CHANGELOG](./CHANGELOG.md)
+
 ## Getting started
 
 ```text
