@@ -121,8 +121,10 @@ export const main = async (
     cachePages: boolean = true,
     overrideConfig: any = {}, // should have some keys of IDocumentOptions
 ) => {
-    logger.log(`Client working dir: ${clientWorkingDir}`)
-    logger.log(`Default assets root dir: ${rootDir}`)
+    const presentationWorkingDir = path.join(clientWorkingDir, path.dirname(slideSource))
+    logger.log(`Client working dir: ${clientWorkingDir}`) // Where the user started the app
+    logger.log(`Presentation working dir: ${presentationWorkingDir}`) // Where the presentation is held, relative paths are originated from there
+    logger.log(`Default assets root dir: ${rootDir}`) // Where the assets are available in the installed lib folder
     const documentText = "" + fs.readFileSync(slideSource)
     const config: Configuration = { ...documentOptions(defaultConfiguration, documentText), ...overrideConfig }
     if (generateBundle) {
@@ -131,14 +133,14 @@ export const main = async (
         await jetpack.removeAsync(exportPath)
         console.log(`Start to generate presentation to: ${exportPath}`)
         // copy all libs. Might be exhausting, but this makes sure that all plugins work properly
-        const targetPath = path.join(getExportPath(config), "libs")
-        await jetpack.copy(path.join(rootDir, "libs"), targetPath)
-        // console.log(`Lib files generated... ${targetPath}`)
+        const copyAllLibsTargetPath = path.join(getExportPath(config), "libs")
+        await jetpack.copy(path.join(rootDir, "libs"), copyAllLibsTargetPath)
+        // console.log(`Lib files generated... ${copyAllLibsTargetPath}`)
         console.warn("NOTE: Referenced relative files have been copied from `src` and `href` properties, for others, or dynamic ones please find a custom solution.")
     }
     const server = new RevealServer(
         logger,
-        () => clientWorkingDir, // Static files relative to MD file
+        () => presentationWorkingDir, // Static files relative to MD file
         () => parseSlides(slideContent(documentText), config),
         () => config,
         rootDir, // BasePath to extensions, ejs views and libs in this folder

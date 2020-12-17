@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Added
 
 - Make it selectable to print ejb debug logs
+- Make it work for relative paths from the server
 
 ## 0.0.1
 

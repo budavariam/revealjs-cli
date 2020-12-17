@@ -11,3 +11,4 @@
 - [ ] MED: Make it easier to change export location
 - [ ] LOW: Add automatized version increase and publish
 - [ ] LOW: Try to decrease npm package size by adding libs as a dependency instead of storing static files in the repo
+- [x] HIGH: Make it work for relative paths from the server
