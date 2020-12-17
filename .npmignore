@@ -15,3 +15,4 @@ coverconfig.json
 .editorconfig
 .gitattributes
 *.map
+coverage/
