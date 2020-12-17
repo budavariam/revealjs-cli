@@ -16,3 +16,5 @@ coverconfig.json
 .gitattributes
 *.map
 coverage/
+README-DEV.md
+TODO.md
