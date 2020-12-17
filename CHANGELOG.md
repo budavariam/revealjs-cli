@@ -20,6 +20,12 @@ Reminder for types of changes:
 
 ## [Unreleased]
 
+## [0.0.5] - 2020-12-17
+
+## Changed
+
+- Reduced dependency size by not bundling all dependencies together.
+
 ## [0.0.4] - 2020-12-17
 
 ## Fixed
@@ -54,6 +60,7 @@ Getting started from [VSCode Reveal:4.0.3](https://github.com/evilz/vscode-revea
 - CLI options
 - Extract modules from VSCode extension
 
-[Unreleased]: https://github.com/budavariam/revealjs-cli/compare/v0.0.4...HEAD
+[Unreleased]: https://github.com/budavariam/revealjs-cli/compare/v0.0.5...HEAD
+[0.0.5]: https://github.com/budavariam/revealjs-cli/compare/v0.0.4...v0.0.5
 [0.0.4]: https://github.com/budavariam/revealjs-cli/compare/v0.0.3...v0.0.4
 [0.0.3]: https://github.com/budavariam/revealjs-cli/compare/v0.0.1...v0.0.3
