@@ -20,7 +20,7 @@ Reminder for types of changes:
 
 ## [Unreleased]
 
-## [0.0.2] - 2020-12-17
+## [0.0.3] - 2020-12-17
 
 ## Added
 
@@ -48,5 +48,5 @@ Getting started from [VSCode Reveal:4.0.3](https://github.com/evilz/vscode-revea
 - CLI options
 - Extract modules from VSCode extension
 
-[Unreleased]: https://github.com/budavariam/revealjs-cli/compare/v0.0.2...HEAD
-[0.0.2]: https://github.com/budavariam/revealjs-cli/compare/v0.0.1...v0.0.2
+[Unreleased]: https://github.com/budavariam/revealjs-cli/compare/v0.0.3...HEAD
+[0.0.3]: https://github.com/budavariam/revealjs-cli/compare/v0.0.1...v0.0.3
