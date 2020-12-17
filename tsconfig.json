@@ -11,6 +11,7 @@
         "sourceMap": true,
         "rootDir": ".",
         "strictNullChecks": true,
+        "resolveJsonModule": true,
         "plugins": [
             {
                 "name": "typescript-tslint-plugin"

@@ -1,3 +1,5 @@
+import * as packageInfo from "../package.json"
+
 import { initLogger, loadConfigFile, main } from "./cli";
 import { LogLevel } from "./Logger";
 
@@ -15,6 +17,8 @@ program
     .option('-r, --refresh', 'do not cache generated template')
     .option('-c, --config <location>', 'config json file to override default values')
     .option('-o, --open <location>', 'source of the starter markdown file')
+
+program.version(packageInfo.version)
 program.parse(process.argv);
 
 const debugMode = program.debug
