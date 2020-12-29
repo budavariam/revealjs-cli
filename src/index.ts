@@ -1,4 +1,5 @@
 import * as packageInfo from "../package.json"
+import * as fs from "fs"
 
 import { initLogger, loadConfigFile, main } from "./cli";
 import { LogLevel } from "./Logger";
@@ -36,6 +37,9 @@ const noQuestions = program.yes
 
 if (!slideSource) {
     console.error("Please specify a markdown file to open with --open parameter. More info: --help")
+    process.exit(1)
+} else if (!fs.existsSync(slideSource)) {
+    console.error(`Starter markdown file '${slideSource}' is not acccessible. Please provide a valid path.`)
     process.exit(1)
 }
 const overrideConfig = loadConfigFile(program.config || "")

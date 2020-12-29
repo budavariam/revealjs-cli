@@ -20,6 +20,8 @@ Reminder for types of changes:
 
 ## [Unreleased]
 
+- Handle missing starter markdown file
+
 ## [0.0.5] - 2020-12-17
 
 ## Changed
