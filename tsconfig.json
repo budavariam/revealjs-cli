@@ -12,6 +12,7 @@
         "rootDir": ".",
         "strictNullChecks": true,
         "resolveJsonModule": true,
+        "esModuleInterop": true,
         "skipLibCheck": true,
         "plugins": [
             {

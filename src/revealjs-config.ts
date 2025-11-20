@@ -15,7 +15,7 @@
  * in the views/ directory due to API changes.
  */
 
-export const REVEALJS_VERSION = '3.8.0';
+export const REVEALJS_VERSION = '3.9.2';
 export const HIGHLIGHT_VERSION = '9.15.10';
 export const FONT_AWESOME_VERSION = 'font-awesome-4.7.0';
 

@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import axios from 'axios'
 import * as jetpack from "fs-jetpack";
-import * as matter from 'gray-matter'
+import matter from 'gray-matter'
 import * as path from 'path'
 import * as cheerio from 'cheerio'
 import * as readline from 'readline'
@@ -205,7 +205,7 @@ export const main = async (
     if (serve) {
         console.log(`Serving slides at: ${serverUri}`)
         console.log(`Use this url to export (print) pdf: ${exportPDFUri(server)}`)
-        //console.log(`Speaker view served from: ${serverUri}libs/reveal.js/3.8.0/plugin/notes/notes.html (NEEDS TO OPEN WITH SHORTCUT)`)
+        //console.log(`Speaker view served from: ${serverUri}libs/reveal.js/3.9.2/plugin/notes/notes.html (NEEDS TO OPEN WITH SHORTCUT)`)
     } else if (!serve) {
         try {
             // force ejs to generate main file

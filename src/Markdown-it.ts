@@ -1,5 +1,5 @@
-import * as attrs from '@evilz/markdown-it-attrs'
-import * as md from 'markdown-it'
+import MarkdownItAttrs from 'markdown-it-attrs'
+import MarkdownIt from 'markdown-it'
 import * as blockEmbed from 'markdown-it-block-embed'
 import * as container from 'markdown-it-container'
 import * as githubHeadings from 'markdown-it-github-headings'
@@ -48,14 +48,14 @@ const note = (markdown, config) => {
 }
 
 export default (config: Configuration) => {
-  return md({
+  return MarkdownIt({
     html: true,
     linkify: true,
     typographer: true
   })
     .use(multimdTable, { enableMultilineRows: true, enableRowspan: true })
-    .use(attrs)
-    .use(attrs, { leftDelimiter: '<!-- .element:', rightDelimiter: '-->', })
+    .use(MarkdownItAttrs)
+    .use(MarkdownItAttrs, { leftDelimiter: '<!-- .element:', rightDelimiter: '-->', })
     .use(imsize)
     .use(taskLists, { label: true, labelAfter: true })
     .use(blockEmbed)
