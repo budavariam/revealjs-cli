@@ -1,11 +1,12 @@
 import { LogLevel } from './Logger'
+import { REVEALJS_VERSION, HIGHLIGHT_VERSION, FONT_AWESOME_VERSION } from './revealjs-config'
 
 /**
  * @file Manages the configuration settings for the extension.
  * @author Vincent Bourdon @Evilznet
  */
 
-export type Configuration = IDocumentOptions & IExtensionOptions
+export type Configuration = IDocumentOptions & IExtensionOptions & IRevealJSPaths
 
 type themes = 'black' | 'white' | 'league' | 'beige' | 'sky' | 'night' | 'serif' | 'simple' | 'solarized'
 type transitions = 'default' | 'none' | 'fade' | 'slide' | 'convex' | 'concave' | 'zoom'
@@ -73,6 +74,15 @@ export interface IExtensionOptions {
   exportHTMLPath: string
   openFilemanagerAfterHTMLExport: boolean
   logLevel: LogLevel
+}
+
+export interface IRevealJSPaths {
+  revealjsVersion: string
+  highlightVersion: string
+  fontAwesomeVersion: string
+  revealjsPath: string
+  highlightPath: string
+  fontAwesomePath: string
 }
 
 export const getDocumentOptions = (configuration: Configuration) => {
@@ -146,7 +156,15 @@ export const defaultConfiguration: Configuration = {
   enableChalkboard: true,
   enableTitleFooter: true,
   enableZoom: true,
-  enableSearch: true
+  enableSearch: true,
+
+  // Reveal.js version paths
+  revealjsVersion: REVEALJS_VERSION,
+  highlightVersion: HIGHLIGHT_VERSION,
+  fontAwesomeVersion: FONT_AWESOME_VERSION,
+  revealjsPath: `libs/reveal.js/${REVEALJS_VERSION}`,
+  highlightPath: `libs/highlight.js/${HIGHLIGHT_VERSION}`,
+  fontAwesomePath: `libs/reveal.js/${FONT_AWESOME_VERSION}`
 }
 
 export const loadConfiguration = (getExtensionConf: () => any) => {

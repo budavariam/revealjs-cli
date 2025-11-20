@@ -42,46 +42,46 @@
 
         // More info https://github.com/hakimel/reveal.js#dependencies
         dependencies: [
-            // { src: 'libs/reveal.js/3.8.0/lib/js/classList.js', condition: function () { return !document.body.classList; } },
-            // { src: 'libs/reveal.js/3.8.0/plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
-            // { src: 'libs/reveal.js/3.8.0/plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
-            { src: 'libs/reveal.js/3.8.0/plugin/notes/notes.js', async: true },
-            { src: 'libs/reveal.js/3.8.0/plugin/chart/Chart.min.js' },
-            { src: 'libs/reveal.js/3.8.0/plugin/chart/csv2chart.js' },
-            { src: 'libs/reveal.js/3.8.0/plugin/embed-tweet/embed-tweet.js' },
-            { src: 'libs/reveal.js/3.8.0/plugin/math/math.js', async: true },
-            { src: 'libs/highlight.js/9.15.10/highlight.js', async: true },
-            { src: 'libs/reveal.js/3.8.0/plugin/anything/anything.js' },
-            { src: 'libs/reveal.js/3.8.0/plugin/mermaid/mermaid.min.js', async: true, callback: function() {mermaid.initialize({startOnLoad:false})} },	
+            // { src: '<%= revealjsPath %>/lib/js/classList.js', condition: function () { return !document.body.classList; } },
+            // { src: '<%= revealjsPath %>/plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+            // { src: '<%= revealjsPath %>/plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+            { src: '<%= revealjsPath %>/plugin/notes/notes.js', async: true },
+            { src: '<%= revealjsPath %>/plugin/chart/Chart.min.js' },
+            { src: '<%= revealjsPath %>/plugin/chart/csv2chart.js' },
+            { src: '<%= revealjsPath %>/plugin/embed-tweet/embed-tweet.js' },
+            { src: '<%= revealjsPath %>/plugin/math/math.js', async: true },
+            { src: '<%= highlightPath %>/highlight.js', async: true },
+            { src: '<%= revealjsPath %>/plugin/anything/anything.js' },
+            { src: '<%= revealjsPath %>/plugin/mermaid/mermaid.min.js', async: true, callback: function() {mermaid.initialize({startOnLoad:false})} },
 
            <% if (enableSearch) { %>
-        { src: 'libs/reveal.js/3.8.0/plugin/search/search.js', async: true },
+        { src: '<%= revealjsPath %>/plugin/search/search.js', async: true },
            <% } %>
 
            <% if (enableZoom) { %>
-        { src: 'libs/reveal.js/3.8.0/plugin/zoom-js/zoom.js', async: true },
+        { src: '<%= revealjsPath %>/plugin/zoom-js/zoom.js', async: true },
             <% } %>
 
             <% if (enableChalkboard) { %>
-        { src: 'libs/reveal.js/3.8.0/plugin/chalkboard/chalkboard.js' },
+        { src: '<%= revealjsPath %>/plugin/chalkboard/chalkboard.js' },
             <% } %>
 
             <% if (enableMenu) { %>
-        { src: 'libs/reveal.js/3.8.0/plugin/menu/menu.js' },
+        { src: '<%= revealjsPath %>/plugin/menu/menu.js' },
             <% } %>
 
             <% if (enableTitleFooter) { %>
-        { src: 'libs/reveal.js/3.8.0/plugin/title-footer/title-footer.js', async: true, callback: function () { title_footer.initialize(); } },
+        { src: '<%= revealjsPath %>/plugin/title-footer/title-footer.js', async: true, callback: function () { title_footer.initialize(); } },
             <% } %>
 
         {
-            src: 'libs/highlight.js/9.15.10/reveal-code-focus-1.0.0-mod.js',
+            src: '<%= highlightPath %>/reveal-code-focus-1.0.0-mod.js',
             async: true,
             callback: function () {
                 RevealCodeFocus();
             }
         },
-           // {src: 'libs/reveal.js/3.8.0/plugin/line-numbers/line-numbers.js'}
+           // {src: '<%= revealjsPath %>/plugin/line-numbers/line-numbers.js'}
         ]
         ,
     keyboard: {
@@ -92,7 +92,7 @@
         68: function () { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
     },
     math: {
-       // mathjax: 'libs/reveal.js/3.8.0/plugin/math/MathJax.js',
+       // mathjax: '<%= revealjsPath %>/plugin/math/MathJax.js',
              mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
             config: 'TeX-AMS_HTML-full'
     },

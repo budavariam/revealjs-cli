@@ -71,11 +71,11 @@ const showHints = () => {
 
 /**
  * I consider a path a local file if it does not start with `#`, `?` or `http`
- * 
+ *
  * @param _ index of the item
  * @param e url path src/href
  */
-const cheerioLocalFileReference = (_: number, e: string) => e && !e.match(/^#|\?|http/)
+const cheerioLocalFileReference = (_: number, e: string) => !!e && !e.match(/^#|\?|http/)
 
 /**
  * I assume that the generated index.html contains links to all referenced files.
@@ -90,10 +90,10 @@ const cheerioLocalFileReference = (_: number, e: string) => e && !e.match(/^#|\?
  */
 const getReferencedFiles = async (logger: Logger, baseUrl: string, body: string) => {
     const $ = cheerio.load(body);
-    const references = [].concat(
-        $('*[href]').map((_, link) => $(link).attr('href')).filter(cheerioLocalFileReference).get()
+    const references = ([] as string[]).concat(
+        $('*[href]').map((_, link) => $(link).attr('href')).filter(cheerioLocalFileReference).get() as string[]
     ).concat(
-        $('*[src]').map((_, link) => $(link).attr('src')).filter(cheerioLocalFileReference).get()
+        $('*[src]').map((_, link) => $(link).attr('src')).filter(cheerioLocalFileReference).get() as string[]
     ).map((relativePath) => (new URL(relativePath, baseUrl)).href)
     logger.log("Found references: " + JSON.stringify(references, null, 2))
     return Promise.allSettled(references.map((path) => {

@@ -12,6 +12,7 @@
         "rootDir": ".",
         "strictNullChecks": true,
         "resolveJsonModule": true,
+        "skipLibCheck": true,
         "plugins": [
             {
                 "name": "typescript-tslint-plugin"
