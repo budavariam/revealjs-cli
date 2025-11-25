@@ -1,7 +1,7 @@
 {
   "name": "revealjs-cli",
   "displayName": "revealjs-cli",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Show markdown as revealJs presentation",
   "bin": {
     "revealjs-cli": "dist/revealjs-cli.js"
