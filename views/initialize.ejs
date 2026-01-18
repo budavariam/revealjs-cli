@@ -51,9 +51,27 @@
             { src: '<%= revealjsPath %>/plugin/embed-tweet/embed-tweet.js' },
             { src: '<%= revealjsPath %>/plugin/math/math.js', async: true },
             { src: '<%= highlightPath %>/highlight.js', async: true },
-            { src: '<%= revealjsPath %>/plugin/anything/anything.js' },
-            { src: '<%= revealjsPath %>/plugin/mermaid/mermaid.min.js', async: true, callback: function() {mermaid.initialize({startOnLoad:false})} },
-
+            { 
+                src: '<%= revealjsPath %>/plugin/mermaid/mermaid.min.js', 
+                async: true, 
+                callback: function() {
+                mermaid.initialize({ startOnLoad: false });
+                
+                // Manually render all mermaid diagrams
+                Reveal.addEventListener('ready', function() {
+                    mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+                });
+                
+                // Re-render on slide change (if needed for lazy loading)
+                Reveal.addEventListener('slidechanged', function(event) {
+                    var currentSlide = event.currentSlide;
+                    var mermaidDivs = currentSlide.querySelectorAll('.mermaid:not([data-processed])');
+                    if (mermaidDivs.length > 0) {
+                    mermaid.init(undefined, mermaidDivs);
+                    }
+                });
+                }
+            },
            <% if (enableSearch) { %>
         { src: '<%= revealjsPath %>/plugin/search/search.js', async: true },
            <% } %>
@@ -119,12 +137,6 @@
         pie: { backgroundColor: [["rgba(0,0,0,.8)", "rgba(220,20,20,.8)", "rgba(20,220,20,.8)", "rgba(220,220,20,.8)", "rgba(20,20,220,.8)"]] },
         radar: { borderColor: ["rgba(20,220,220,.8)", "rgba(220,120,120,.8)", "rgba(20,120,220,.8)"] },
     },
-    anything: [ 
-	 {
-	  className: "mermaid"
-	 },
-	 // ...
-	],
     menu: {
         // Specifies which side of the presentation the menu will 
         // be shown. Use 'left' or 'right'.

@@ -4,7 +4,7 @@
 
 - Install dependencies: `npm install`
 - Run dev server: `npm run webpack-dev`
-- Start the app server with e.g: `node dist/revealjs-cli.js --open ./examples/features/sample.md`
+- Start the app server with e.g: `node dist/revealjs-cli.js --open ./examples/features/sample.md --serve`
 - Open the server url that is printed
 
 ## Publish
