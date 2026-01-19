@@ -51,27 +51,6 @@
             { src: '<%= revealjsPath %>/plugin/embed-tweet/embed-tweet.js' },
             { src: '<%= revealjsPath %>/plugin/math/math.js', async: true },
             { src: '<%= highlightPath %>/highlight.js', async: true },
-            { 
-                src: '<%= revealjsPath %>/plugin/mermaid/mermaid.min.js', 
-                async: true, 
-                callback: function() {
-                mermaid.initialize({ startOnLoad: false });
-                
-                // Manually render all mermaid diagrams
-                Reveal.addEventListener('ready', function() {
-                    mermaid.init(undefined, document.querySelectorAll('.mermaid'));
-                });
-                
-                // Re-render on slide change (if needed for lazy loading)
-                Reveal.addEventListener('slidechanged', function(event) {
-                    var currentSlide = event.currentSlide;
-                    var mermaidDivs = currentSlide.querySelectorAll('.mermaid:not([data-processed])');
-                    if (mermaidDivs.length > 0) {
-                    mermaid.init(undefined, mermaidDivs);
-                    }
-                });
-                }
-            },
            <% if (enableSearch) { %>
         { src: '<%= revealjsPath %>/plugin/search/search.js', async: true },
            <% } %>
@@ -256,6 +235,58 @@
     }
     });
 
+    // Initialize Mermaid v11+ with error handling
+    Reveal.addEventListener('ready', function() {
+        try {
+            mermaid.initialize({
+                startOnLoad: false,
+                theme: 'dark',
+                logLevel: 'error',
+                securityLevel: 'loose',
+                flowchart: {
+                    useMaxWidth: true,
+                    htmlLabels: true
+                }
+            });
 
+            // Find and render all mermaid diagrams with error handling
+            var diagrams = document.querySelectorAll('.mermaid');
+            diagrams.forEach(function(element, index) {
+                var graphDefinition = element.textContent.trim();
+                var graphId = 'mermaid-diagram-' + index;
+
+                // Modern Mermaid API (v10+) uses Promises
+                mermaid.render(graphId, graphDefinition)
+                    .then(function(result) {
+                        // result.svg contains the rendered SVG
+                        element.innerHTML = result.svg;
+
+                        // Optionally execute bind functions if present
+                        if (result.bindFunctions) {
+                            result.bindFunctions(element);
+                        }
+                    })
+                    .catch(function(err) {
+                        console.error('Mermaid syntax error in diagram ' + index + ':', err);
+                        console.error('Diagram content:', graphDefinition);
+
+                        // Display error on the slide
+                        var errorMessage = err.message || err.toString();
+                        element.innerHTML = '<div style="color: red; border: 2px solid red; padding: 20px; background: rgba(255,0,0,0.1);">' +
+                            '<h3>Mermaid Syntax Error (Diagram ' + index + ')</h3>' +
+                            '<pre style="text-align: left; font-size: 0.6em; white-space: pre-wrap; word-wrap: break-word;">' +
+                            errorMessage.replace(/</g, '&lt;').replace(/>/g, '&gt;') +
+                            '</pre>' +
+                            '<details style="text-align: left; margin-top: 10px;">' +
+                            '<summary style="cursor: pointer; color: yellow;">Show diagram source</summary>' +
+                            '<pre style="font-size: 0.5em; margin-top: 10px; white-space: pre-wrap;">' +
+                            graphDefinition.replace(/</g, '&lt;').replace(/>/g, '&gt;') +
+                            '</pre></details></div>';
+                    });
+            });
+        } catch (err) {
+            console.error('Mermaid initialization error:', err);
+        }
+    });
 
 </script>

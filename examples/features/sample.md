@@ -34,10 +34,10 @@ title: "VSCode Reveal intro"
 # some Table
 
 |             |          Grouping           ||
-First Header  | Second Header | Third Header |
- ------------ | :-----------: | -----------: |
-Content       |          *Long Cell*        ||
-Content       |   **Cell**    |         Cell |
+| First Header | Second Header | Third Header |
+| ------------ | :-----------: | -----------: |
+| Content      |  *Long Cell*  |              |
+| Content      |   **Cell**    |         Cell |
                                               
 New section   |     More      |         Data |
 And more      | With an escaped '\\|'       ||
@@ -45,20 +45,20 @@ And more      | With an escaped '\\|'       ||
 
 --
 
-First header | Second header
--------------|---------------
-List:        | More  \
-- over       | data  \
-- several    |       \
-- lines      | 
+| First header | Second header |
+| ------------ | ------------- |
+| List:        | More  \       |
+| - over       | data  \       |
+| - several    | \             |
+| - lines      |
 
 --
 
-First header | Second header
--------------|---------------
-Merged       | Cell 1
-^^           | Cell 2
-^^           | Cell 3
+| First header | Second header |
+| ------------ | ------------- |
+| Merged       | Cell 1        |
+| ^^           | Cell 2        |
+| ^^           | Cell 3        |
 
 --
 
@@ -70,7 +70,7 @@ Merged       | Cell 1
 sequenceDiagram
     participant Alice
     participant Bob 
-    Alice->>John: Hello John, how are you?
+    Alice->>John: Hello John, how are youuuu?
     loop Healthcheck
         John->>John: Fight against hypochondria
     end
@@ -84,8 +84,8 @@ sequenceDiagram
 
 <div class="mermaid">
 graph LR;
-  A(AAAA)==> B(B node);
-  B==> C(SEE SEE);
+  A(AAAA)-->|thick| B(B node);
+  B-->|thick| C(SEE SEE);
 
   class A diag-a-styles;
   class B diag-b-styles
@@ -340,11 +340,11 @@ Code syntax highlighting courtesy of [highlight.js](http://softwaremaniacs.org/s
 
 ## Tabular Tables
 
-| Tables        | Are           | Cool  |
-|-------------|:-----------:|----:|
+| Tables        |      Are      |  Cool |
+| ------------- | :-----------: | ----: |
 | col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      | $12   |
-| zebra stripes | are neat      | $1    |
+| col 2 is      |   centered    |   $12 |
+| zebra stripes |   are neat    |    $1 |
 
 ---
 
