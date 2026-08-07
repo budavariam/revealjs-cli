@@ -22,6 +22,49 @@ Reminder for types of changes:
 
 - Handle missing starter markdown file
 
+## [0.0.10] - 2026-08-07
+
+### Fixed
+
+- Speaker view previewed the wrong slide at vertical stack boundaries: standing
+  on the last subslide of a stack, the "Upcoming" pane could show the next
+  stack's remembered subslide (`data-previous-indexv`) instead of its top
+  slide, because the preview iframe ran `next()` on itself while holding its
+  own per-stack position memory. The preview now navigates to an explicit
+  target computed from the presenter window's `availableFragments`/
+  `availableRoutes` (fragment steps still forward `next()`; `navigationMode:
+  'grid'` keeps its vertical index). Same bug is still open upstream as
+  [reveal.js#3831](https://github.com/hakimel/reveal.js/issues/3831).
+
+## [0.0.9] - 2026-01-19
+
+### Changed
+
+- Updated bundled mermaid.js to 11.12.2, with better error handling for broken diagrams
+
+## [0.0.8] - 2026-01-19
+
+### Fixed
+
+- Removed a stray `anything.js` reference from the mermaid.js plugin bundle
+
+## [0.0.7] - 2025-11-25
+
+### Fixed
+
+- `title-footer` plugin referenced a wrong asset path after the reveal.js upgrade
+
+## [0.0.6] - 2025-11-20
+
+Revival release after five years — mostly toolchain modernisation and publish-workflow debugging.
+
+### Changed
+
+- Upgraded bundled reveal.js from 3.8.0 to 3.9.2 (3.8.0 bundle removed)
+- Extracted plugin configs and paths for easier maintenance
+- Modernised dependencies and build toolchain (webpack 5, commander 12, axios 1, cheerio 1, Node 20+); replaced `@evilz/markdown-it-attrs` with upstream `markdown-it-attrs`
+- Publish flow now runs a production build before the version bump (`prenpmpublish`)
+
 ## [0.0.5] - 2020-12-17
 
 ## Changed
@@ -62,7 +105,12 @@ Getting started from [VSCode Reveal:4.0.3](https://github.com/evilz/vscode-revea
 - CLI options
 - Extract modules from VSCode extension
 
-[Unreleased]: https://github.com/budavariam/revealjs-cli/compare/v0.0.5...HEAD
+[Unreleased]: https://github.com/budavariam/revealjs-cli/compare/v0.0.10...HEAD
+[0.0.10]: https://github.com/budavariam/revealjs-cli/compare/v0.0.9...v0.0.10
+[0.0.9]: https://github.com/budavariam/revealjs-cli/compare/v0.0.8...v0.0.9
+[0.0.8]: https://github.com/budavariam/revealjs-cli/compare/v0.0.7...v0.0.8
+[0.0.7]: https://github.com/budavariam/revealjs-cli/compare/v0.0.6...v0.0.7
+[0.0.6]: https://github.com/budavariam/revealjs-cli/compare/v0.0.5...v0.0.6
 [0.0.5]: https://github.com/budavariam/revealjs-cli/compare/v0.0.4...v0.0.5
 [0.0.4]: https://github.com/budavariam/revealjs-cli/compare/v0.0.3...v0.0.4
 [0.0.3]: https://github.com/budavariam/revealjs-cli/compare/v0.0.1...v0.0.3
