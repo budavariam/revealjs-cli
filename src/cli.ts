@@ -199,7 +199,7 @@ export const main = async (
         () => shouldGenerateBundle,
         () => getExportPath(config)
     )
-    server.start(Math.abs(port), cachePages, debugServer)
+    await server.start(Math.abs(port), cachePages, debugServer)
     const serverUri = getUri(server) || ""
     showHints()
     if (serve) {

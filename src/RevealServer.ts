@@ -16,7 +16,7 @@ import { Logger } from './Logger'
 export class RevealServer {
   private readonly app = new Koa();
   private server: http.Server | null
-  private readonly host = 'localhost'
+  private readonly host = '127.0.0.1'
 
   constructor(
     private readonly logger: Logger,
@@ -46,13 +46,17 @@ export class RevealServer {
     const addr = this.server.address()
     return typeof addr === 'string' ? addr : `http://${this.host}:${addr.port}/`
   }
-  public start(port = 0, cachePages = true, debugServer = false) {
+  public async start(port = 0, cachePages = true, debugServer = false): Promise<void> {
+    if (this.isListening || !this.getRootDir()) {
+      return
+    }
     try {
-
-      if (!this.isListening && this.getRootDir()) {
-        this.configure(cachePages, debugServer)
-        this.server = this.app.listen(port)
-      }
+      this.configure(cachePages, debugServer)
+      await new Promise<void>((resolve, reject) => {
+        this.server!.once('listening', resolve)
+        this.server!.once('error', (err) => reject(new Error(`Cannot start server: ${err}`)))
+        this.server!.listen(port, this.host)
+      })
     } catch (err) {
       throw new Error(`Cannot start server: ${err}`)
     }
@@ -113,7 +117,7 @@ export class RevealServer {
       this.logger.error(err)
     })
 
-    this.server = app.listen();
+    this.server = http.createServer(app.callback())
   }
 
 
